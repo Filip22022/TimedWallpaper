@@ -22,11 +22,13 @@ class WallpaperButton(QWidget):
 
     def _init_ui(self):
         self.label.setContentsMargins(5, -5, 5, 5)
-        self.image_button.setFixedSize(QSize(400, 300))
+        self.image_button.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
 
         self.layout.addWidget(self.label)
         self.layout.addWidget(self.image_button, stretch=1)
-        self.layout.setAlignment(self.image_button, Qt.AlignCenter)
+        # self.layout.setAlignment(self.image_button, Qt.AlignCenter)
+        self.layout.setContentsMargins(0, 0, 0, 0)
+        self.layout.setSpacing(0)
         self.setLayout(self.layout)
 
     def choose_image(self):
@@ -52,8 +54,6 @@ class CounterButton(QPushButton):
         super(CounterButton, self).__init__(text, parent)
         self.setMaximumWidth(100)
         self.setMaximumHeight(80)
-
-        self.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
 
         font = QFont()
         font.setPointSize(20)

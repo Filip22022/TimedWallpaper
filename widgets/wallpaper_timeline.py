@@ -1,6 +1,6 @@
 from PyQt5 import QtCore
 from PyQt5.QtCore import Qt
-from PyQt5.QtWidgets import QWidget, QSlider, QHBoxLayout, QVBoxLayout
+from PyQt5.QtWidgets import QWidget, QSlider, QHBoxLayout, QVBoxLayout, QScrollArea
 from superqt import QRangeSlider
 
 from widgets.buttons import WallpaperButton
@@ -132,7 +132,8 @@ class WallpaperDisplay(QWidget):
 
     def _init_ui(self):
         self._layout = QHBoxLayout()
-        self._layout.setContentsMargins(10, 10, 10, 10)
+        self._layout.setContentsMargins(0, 0, 0, 0)
+        self._layout.setSpacing(0)
 
         self._create_changepoints(self._changepoint_count)
 
