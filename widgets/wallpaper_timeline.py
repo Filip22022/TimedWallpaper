@@ -80,7 +80,7 @@ class Timeline(QWidget):
         self._slider.setTickInterval(60)
         self._slider.setSingleStep(self._interval)
         self._slider.setBarMovesAllHandles(False)
-        self._slider.valueChanged.connect(self.emit_update)
+        self._slider.valueChanged.connect(self.update_values)
 
     def update_count(self, count):
         """
@@ -102,8 +102,11 @@ class Timeline(QWidget):
         new_values = self.values[:self.changepoint_count - 1] + self.values[-1:]
         self._slider.setValue(new_values)
 
-    def emit_update(self):
-        self.valuesChanged.emit(self.values)
+    def update_values(self):
+        self.values = list(self._slider.value())
+        self._emit_values(self.values)
+    def _emit_values(self, values):
+        self.valuesChanged.emit(values)
 
 
 class WallpaperDisplay(QWidget):

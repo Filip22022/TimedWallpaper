@@ -41,7 +41,7 @@ class WallpaperButton(QWidget):
         # self.layout.setAlignment(self.image_button, Qt.AlignCenter)
 
     def setTimes(self, time_start_minutes, time_end_minutes):
-        start_hours_minutes = str(int(time_start_minutes // 60)) + ":" + str(int(time_end_minutes % 60))
+        start_hours_minutes = str(int(time_start_minutes // 60)) + ":" + str(int(time_start_minutes % 60))
         end_hours_minutes = str(int(time_end_minutes // 60)) + ":" + str(int(time_end_minutes % 60))
         self.label.setText(start_hours_minutes + " - " + end_hours_minutes)
 
