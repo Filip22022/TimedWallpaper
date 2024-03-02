@@ -16,9 +16,12 @@ class WallpaperTimeline(QWidget):
         super(WallpaperTimeline, self).__init__()
         self.changepoint_count = 2
 
-        self.timeline = Timeline()
+        default_times = [6*60, 20*60]
+        default_count = len(default_times)
+        self.timeline = Timeline(default_times, default_count)
         self.display = WallpaperDisplay()
-        self.timeline.valuesChanged.connect(self.display.update_times)
+        self.display.set_times(default_times)
+        self.timeline.valuesChanged.connect(self.display.set_times)
 
         self._init_ui()
 
@@ -39,21 +42,17 @@ class Timeline(QWidget):
     """
     valuesChanged = QtCore.pyqtSignal(list)
 
-    def __init__(self, values=None, count: int = None):
+    def __init__(self, values: list[int], display_count: int):
         """
-        :param int[] values: starting time values for the sliders in minutes
-        :param int count: number of sliders to be displayed
+        :param list[int] values: starting time values for the sliders in minutes
+        :param int display_count: number of sliders to be displayed
         """
         super(Timeline, self).__init__()
         self._min = 0
         self._max = 24 * 60 - 1
         self._interval = 5
-        if values is None:
-            values = [6 * 60, 20 * 60]
         self.values = values
-        if count is None:
-            count = 2
-        self.changepoint_count = count
+        self.changepoint_count = display_count
         self._slider = QRangeSlider(Qt.Horizontal)
 
         levels = range(self._min, self._max + 1, self._interval)
@@ -80,7 +79,7 @@ class Timeline(QWidget):
         self._slider.setTickInterval(60)
         self._slider.setSingleStep(self._interval)
         self._slider.setBarMovesAllHandles(False)
-        self._slider.valueChanged.connect(self.update_values)
+        self._slider.valueChanged.connect(self._update_values)
 
     def update_count(self, count):
         """
@@ -102,9 +101,10 @@ class Timeline(QWidget):
         new_values = self.values[:self.changepoint_count - 1] + self.values[-1:]
         self._slider.setValue(new_values)
 
-    def update_values(self):
+    def _update_values(self):
         self.values = list(self._slider.value())
         self._emit_values(self.values)
+
     def _emit_values(self, values):
         self.valuesChanged.emit(values)
 
@@ -149,7 +149,7 @@ class WallpaperDisplay(QWidget):
     def update_count(self, count):
         self._changepoint_count = count
 
-    def update_times(self, values):
+    def set_times(self, values):
         last_value = values[-1]
         for changepoint, value in zip(self._changepoints, values):
             changepoint.setTimes(last_value, value)
