@@ -148,7 +148,7 @@ class WallpaperDisplay(QWidget):
         if len(self._changepoints) < self._changepoint_count:
             needed = self._changepoint_count - len(self._changepoints)
             self._create_changepoints(needed)
-        if len(self._changepoints) > self._changepoint_count:
+        if len(self._changepoints) >= self._changepoint_count:
             for i in range(self._changepoint_count):
                 self._changepoints[i].show()
             for i in range(self._changepoint_count, len(self._changepoints)):
