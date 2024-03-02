@@ -27,7 +27,16 @@ class WallpaperTimeline(QWidget):
     def _init_ui(self):
         layout = QVBoxLayout()
         layout.addWidget(self.timeline)
-        layout.addWidget(self.display, stretch=1)
+
+        # Enable horizontal scrolling on timeline widget
+        self.scroll = QScrollArea()
+        self.scroll.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOn)
+        self.scroll.setWidgetResizable(True)
+        self.scroll.setContentsMargins(0, 0, 0, 0)
+        self.scroll.setStyleSheet("border: None;")
+        self.scroll.setWidget(self.display)
+
+        layout.addWidget(self.scroll, stretch=1)
         self.setLayout(layout)
 
     def update_changepoints(self, count):
@@ -139,7 +148,7 @@ class WallpaperDisplay(QWidget):
             changepoint = WallpaperButton()
             changepoint.setAlignment(Qt.AlignCenter)
             self._changepoints.append(changepoint)
-            self._label_layout.addWidget(changepoint)
+            self._button_layout.addWidget(changepoint)
 
     def update_count(self, count):
         self._changepoint_count = count

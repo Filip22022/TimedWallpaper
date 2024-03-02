@@ -33,6 +33,7 @@ class MainWindow(QMainWindow):
         self._init_ui()
 
     def _init_ui(self):
+
         # Create counter layout
         counter_layout = QHBoxLayout()
         counter_layout.addWidget(self.label, stretch=0)
@@ -50,12 +51,7 @@ class MainWindow(QMainWindow):
 
         widget = QWidget()
         widget.setLayout(main_layout)
-        # Enable horizontal scrolling
-        scroll = QScrollArea()
-        scroll.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOn)
-        scroll.setWidgetResizable(True)
-        scroll.setWidget(widget)
-        self.setCentralWidget(scroll)
+        self.setCentralWidget(widget)
 
     def _setup_label(self):
         self.label.setContentsMargins(30, 5, 10, 5)
