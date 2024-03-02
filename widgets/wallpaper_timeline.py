@@ -85,7 +85,7 @@ class Timeline(QWidget):
     def _setup_labels(self):
         self._changepoints = []
         for _ in self.values[0:self.changepoint_count]:
-            changepoint = LabelButton()
+            changepoint = WallpaperButton()
             changepoint.setAlignment(Qt.AlignCenter)
             self._changepoints.append(changepoint)
             self._label_layout.addWidget(changepoint)
@@ -122,13 +122,13 @@ class Timeline(QWidget):
         self._update_labels()
 
 
-class LabelButton(QWidget):
+class WallpaperButton(QWidget):
     """
     Custom widget providing a label with attached choose image button below
     """
 
     def __init__(self):
-        super(LabelButton, self).__init__()
+        super(WallpaperButton, self).__init__()
         self.layout = QVBoxLayout()
         self.path = None
 
