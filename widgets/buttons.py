@@ -12,12 +12,16 @@ class WallpaperButton(QWidget):
         super(WallpaperButton, self).__init__()
         self.layout = QVBoxLayout()
         self.path = None
-
         self.label = QLabel()
-        self.label.setContentsMargins(5, -5, 5, 5)
         self.image_button = ImageButton()
-        self.image_button.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
+
         self.image_button.clicked.connect(self.choose_image)
+
+        self._init_ui()
+
+    def _init_ui(self):
+        self.label.setContentsMargins(5, -5, 5, 5)
+        self.image_button.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
 
         self.layout.addWidget(self.label)
         self.layout.addWidget(self.image_button, stretch=1)
@@ -36,8 +40,10 @@ class WallpaperButton(QWidget):
         self.label.setAlignment(alignment)
         # self.layout.setAlignment(self.image_button, Qt.AlignCenter)
 
-    def setText(self, text):
-        self.label.setText(text)
+    def setTimes(self, time_start_minutes, time_end_minutes):
+        start_hours_minutes = str(int(time_start_minutes // 60)) + ":" + str(int(time_end_minutes % 60))
+        end_hours_minutes = str(int(time_end_minutes // 60)) + ":" + str(int(time_end_minutes % 60))
+        self.label.setText(start_hours_minutes + " - " + end_hours_minutes)
 
 
 class CounterButton(QPushButton):
