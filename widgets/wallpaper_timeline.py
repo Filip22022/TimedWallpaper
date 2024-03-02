@@ -33,6 +33,8 @@ class WallpaperTimeline(QWidget):
 
     def update_changepoints(self, count):
         self.timeline.update_count(count)
+        self.display.update_count(count)
+        self.display.set_times(self.timeline.values)
         self.update()
 
 
