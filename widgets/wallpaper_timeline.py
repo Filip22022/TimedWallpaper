@@ -140,7 +140,6 @@ class WallpaperDisplay(QWidget):
         self._create_changepoints(self._changepoint_count)
 
         self._layout.addLayout(self._button_layout)
-        self._layout.addLayout(self._label_layout, stretch=0)
         self.setLayout(self._layout)
 
     def _create_changepoints(self, number):
