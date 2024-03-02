@@ -127,27 +127,30 @@ class WallpaperDisplay(QWidget):
         self._button_layout = QHBoxLayout()
 
         self._label_layout = QHBoxLayout()
-        self._setup_labels()
+        self._create_changepoints(self._changepoint_count)
 
         self._layout.addLayout(self._button_layout)
         self._layout.addLayout(self._label_layout, stretch=0)
         self.setLayout(self._layout)
 
-    def _setup_labels(self):
-        self._changepoints = []
-        for _ in range(self._changepoint_count):
+    def _create_changepoints(self, number):
+        for _ in range(number):
             changepoint = WallpaperButton()
             changepoint.setAlignment(Qt.AlignCenter)
             self._changepoints.append(changepoint)
             self._label_layout.addWidget(changepoint)
 
-    def _update_labels(self):
-        clear_layout(self._label_layout)
-        self._setup_labels()
-        self._update_times()
 
     def update_count(self, count):
         self._changepoint_count = count
+        if len(self._changepoints) < self._changepoint_count:
+            needed = self._changepoint_count - len(self._changepoints)
+            self._create_changepoints(needed)
+        if len(self._changepoints) > self._changepoint_count:
+            for i in range(self._changepoint_count):
+                self._changepoints[i].show()
+            for i in range(self._changepoint_count, len(self._changepoints)):
+                self._changepoints[i].hide()
 
     def set_times(self, values):
         last_value = values[-1]
