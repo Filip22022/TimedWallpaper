@@ -22,6 +22,7 @@ class MainWindow(QMainWindow):
         self.wallpaper_timeline = WallpaperTimeline()
         self.msg = QMessageBox()
 
+        self.label = QLabel("2")
         self._setup_label()
 
         self.plus_button = CounterButton("+", self)
@@ -29,6 +30,9 @@ class MainWindow(QMainWindow):
         self.minus_button = CounterButton("-", self)
         self.minus_button.clicked.connect(self.changepoint_decrement)
 
+        self._init_ui()
+
+    def _init_ui(self):
         # Create counter layout
         counter_layout = QHBoxLayout()
         counter_layout.addWidget(self.label, stretch=0)
@@ -39,7 +43,6 @@ class MainWindow(QMainWindow):
         counter_layout.setAlignment(self.plus_button, Qt.AlignLeft)
         counter_layout.addStretch(10)
 
-        # Add all to main layout
         main_layout = QVBoxLayout()
         main_layout.setSpacing(10)
         main_layout.addLayout(counter_layout, stretch=1)
@@ -47,7 +50,6 @@ class MainWindow(QMainWindow):
 
         widget = QWidget()
         widget.setLayout(main_layout)
-
         # Enable horizontal scrolling
         scroll = QScrollArea()
         scroll.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOn)
@@ -56,7 +58,6 @@ class MainWindow(QMainWindow):
         self.setCentralWidget(scroll)
 
     def _setup_label(self):
-        self.label = QLabel("2")
         self.label.setContentsMargins(30, 5, 10, 5)
         font = QFont()
         font.setPointSize(20)
