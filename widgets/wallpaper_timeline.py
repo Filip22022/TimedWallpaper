@@ -134,12 +134,8 @@ class WallpaperDisplay(QWidget):
         self._layout = QHBoxLayout()
         self._layout.setContentsMargins(10, 10, 10, 10)
 
-        self._button_layout = QHBoxLayout()
-
-        self._label_layout = QHBoxLayout()
         self._create_changepoints(self._changepoint_count)
 
-        self._layout.addLayout(self._button_layout)
         self.setLayout(self._layout)
 
     def _create_changepoints(self, number):
@@ -147,7 +143,7 @@ class WallpaperDisplay(QWidget):
             changepoint = WallpaperButton()
             changepoint.setAlignment(Qt.AlignCenter)
             self._changepoints.append(changepoint)
-            self._button_layout.addWidget(changepoint)
+            self._layout.addWidget(changepoint)
 
     def update_count(self, count):
         self._changepoint_count = count
