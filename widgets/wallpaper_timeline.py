@@ -3,7 +3,6 @@ from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QWidget, QSlider, QHBoxLayout, QVBoxLayout
 from superqt import QRangeSlider
 
-from utilities.functions import clear_layout
 from widgets.buttons import WallpaperButton
 
 
@@ -16,7 +15,7 @@ class WallpaperTimeline(QWidget):
         super(WallpaperTimeline, self).__init__()
         self.changepoint_count = 2
 
-        default_times = [6*60, 20*60]
+        default_times = [6 * 60, 20 * 60]
         default_count = len(default_times)
         self.timeline = Timeline(default_times, default_count)
         self.display = WallpaperDisplay()
@@ -28,7 +27,7 @@ class WallpaperTimeline(QWidget):
     def _init_ui(self):
         layout = QVBoxLayout()
         layout.addWidget(self.timeline)
-        layout.addWidget(self.display)
+        layout.addWidget(self.display, stretch=1)
         self.setLayout(layout)
 
     def update_changepoints(self, count):
@@ -141,7 +140,6 @@ class WallpaperDisplay(QWidget):
             changepoint.setAlignment(Qt.AlignCenter)
             self._changepoints.append(changepoint)
             self._label_layout.addWidget(changepoint)
-
 
     def update_count(self, count):
         self._changepoint_count = count
