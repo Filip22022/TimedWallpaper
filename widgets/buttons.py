@@ -1,4 +1,5 @@
 from PyQt5 import QtGui
+from PyQt5.QtCore import Qt, QSize
 from PyQt5.QtGui import QFont
 from PyQt5.QtWidgets import QPushButton, QSizePolicy, QFileDialog, QLabel, QVBoxLayout, QWidget
 
@@ -21,10 +22,11 @@ class WallpaperButton(QWidget):
 
     def _init_ui(self):
         self.label.setContentsMargins(5, -5, 5, 5)
-        self.image_button.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
+        self.image_button.setFixedSize(QSize(400, 300))
 
         self.layout.addWidget(self.label)
         self.layout.addWidget(self.image_button, stretch=1)
+        self.layout.setAlignment(self.image_button, Qt.AlignCenter)
         self.setLayout(self.layout)
 
     def choose_image(self):
@@ -38,7 +40,6 @@ class WallpaperButton(QWidget):
 
     def setAlignment(self, alignment):
         self.label.setAlignment(alignment)
-        # self.layout.setAlignment(self.image_button, Qt.AlignCenter)
 
     def setTimes(self, time_start_minutes, time_end_minutes):
         start_hours_minutes = str(int(time_start_minutes // 60)) + ":" + str(int(time_start_minutes % 60))
