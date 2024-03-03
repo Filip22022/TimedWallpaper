@@ -2,7 +2,7 @@ import os
 
 real_path = os.path.realpath(__file__)
 
-win_wallpaper_path = os.path.join(os.path.dirname(real_path), 'wallpaper.exe')
+win_wallpaper_path = os.path.join(os.path.dirname(real_path), '../wallpaper.exe')
 
 
 def set_wallpaper(file_path):

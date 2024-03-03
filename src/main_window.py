@@ -1,10 +1,9 @@
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QFont
-from PyQt5.QtWidgets import QMainWindow, QWidget, QVBoxLayout, QHBoxLayout, QLabel, QScrollArea, \
-    QMessageBox
+from PyQt5.QtWidgets import QMainWindow, QWidget, QVBoxLayout, QHBoxLayout, QLabel, QMessageBox, QPushButton
 
-from widgets.buttons import CounterButton
-from widgets.wallpaper_timeline import WallpaperTimeline
+from src.widgets.buttons import CounterButton
+from src.widgets.wallpaper_timeline import WallpaperTimeline
 
 
 class MultiSlider:

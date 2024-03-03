@@ -3,7 +3,7 @@ from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QWidget, QSlider, QHBoxLayout, QVBoxLayout, QScrollArea
 from superqt import QRangeSlider
 
-from widgets.buttons import WallpaperButton
+from src.widgets.buttons import WallpaperButton
 
 
 class WallpaperTimeline(QWidget):
