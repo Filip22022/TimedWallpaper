@@ -15,23 +15,27 @@ class WallpaperButton(QWidget):
         self.path = None
         self.label = QLabel()
         self.image_button = ImageButton()
+        self.min_size = QSize(400, 300)
+        self.max_size = QSize(800, 600)
 
-        self.image_button.clicked.connect(self.choose_image)
+        self.image_button.clicked.connect(self._choose_image)
 
         self._init_ui()
 
     def _init_ui(self):
         self.label.setContentsMargins(5, -5, 5, 5)
+        self.label.setMaximumSize(self.max_size)
         self.image_button.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
+        self.image_button.setMinimumSize(self.min_size)
+        self.image_button.setMaximumSize(self.max_size)
 
         self.layout.addWidget(self.label)
         self.layout.addWidget(self.image_button, stretch=1)
-        # self.layout.setAlignment(self.image_button, Qt.AlignCenter)
         self.layout.setContentsMargins(0, 0, 0, 0)
         self.layout.setSpacing(0)
         self.setLayout(self.layout)
 
-    def choose_image(self):
+    def _choose_image(self):
         dialog = QFileDialog()
         dialog.setFileMode(QFileDialog.FileMode.ExistingFile)
         dialog.setNameFilter("Images (*.png *.jpg)")
@@ -68,6 +72,7 @@ class ImageButton(QPushButton):
     def setImage(self, image_path):
         self.setText("")
         self.image = image_path
-        self.setIcon(QtGui.QIcon(image_path))
-        self.setIconSize(self.size())
+
+        # setting image to the button
+        self.setStyleSheet(f"border-image : url({self.image}); background-size: cover;")
         self.update()
