@@ -13,13 +13,12 @@ class WallpaperTimeline(QWidget):
 
     def __init__(self):
         super(WallpaperTimeline, self).__init__()
-        self.changepoint_count = 2
 
         default_times = [6 * 60, 20 * 60]
         default_count = len(default_times)
         self.timeline = Timeline(default_times, default_count)
         self.display = WallpaperDisplay()
-        self.display.set_times(default_times)
+        self.display.set_times(self.timeline.get_hours())
         self.timeline.valuesChanged.connect(self.display.set_times)
 
         self._init_ui()
@@ -42,7 +41,7 @@ class WallpaperTimeline(QWidget):
     def update_changepoints(self, count):
         self.timeline.update_count(count)
         self.display.update_count(count)
-        self.display.set_times(self.timeline.values)
+        self.display.set_times(self.timeline.get_hours())
         self.update()
 
 
@@ -113,10 +112,15 @@ class Timeline(QWidget):
 
     def _update_values(self):
         self.values = list(self._slider.value())
-        self._emit_values(self.values)
+        self._emit_values(self.get_hours())
 
     def _emit_values(self, values):
         self.valuesChanged.emit(values)
+
+    def get_hours(self):
+        hours = [str(int(val // 60)) for val in self.values]
+        minutes = [str(int(val % 60)) for val in self.values]
+        return [str(h + ":" + m) for h, m in zip(hours, minutes)]
 
 
 class WallpaperDisplay(QWidget):

@@ -46,10 +46,8 @@ class WallpaperButton(QWidget):
     def setAlignment(self, alignment):
         self.label.setAlignment(alignment)
 
-    def setTimes(self, time_start_minutes, time_end_minutes):
-        start_hours_minutes = str(int(time_start_minutes // 60)) + ":" + str(int(time_start_minutes % 60))
-        end_hours_minutes = str(int(time_end_minutes // 60)) + ":" + str(int(time_end_minutes % 60))
-        self.label.setText(start_hours_minutes + " - " + end_hours_minutes)
+    def setTimes(self, time_start, time_end):
+        self.label.setText(time_start + ' - ' + time_end)
 
 
 class CounterButton(QPushButton):
