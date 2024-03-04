@@ -1,8 +1,11 @@
+from collections import namedtuple
+
 from PyQt5 import QtCore
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QWidget, QSlider, QHBoxLayout, QVBoxLayout, QScrollArea
 from superqt import QRangeSlider
 
+from src.utilities.WallpaperData import WallpaperData
 from src.widgets.buttons import WallpaperButton
 
 
@@ -43,6 +46,11 @@ class WallpaperTimeline(QWidget):
         self.display.update_count(count)
         self.display.set_times(self.timeline.get_hours())
         self.update()
+
+    def get_data(self):
+        values = self.timeline.get_hours()
+        paths = self.display.get_images()
+        return [WallpaperData(value, path) for value, path in zip(values, paths)]
 
 
 class Timeline(QWidget):
@@ -166,3 +174,9 @@ class WallpaperDisplay(QWidget):
         for changepoint, value in zip(self._changepoints, values):
             changepoint.setTimes(last_value, value)
             last_value = value
+
+    def get_images(self):
+        image_paths = []
+        for c in self._changepoints:
+            image_paths.append(c.path)
+        return image_paths
