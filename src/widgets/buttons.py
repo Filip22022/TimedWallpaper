@@ -2,6 +2,8 @@ from PyQt5.QtCore import QSize
 from PyQt5.QtGui import QFont
 from PyQt5.QtWidgets import QPushButton, QSizePolicy, QFileDialog, QLabel, QVBoxLayout, QWidget
 
+from src.utilities.functions import save_image
+
 
 class WallpaperButton(QWidget):
     """
@@ -40,7 +42,8 @@ class WallpaperButton(QWidget):
         dialog.setNameFilter("Images (*.png *.jpg)")
         if dialog.exec():
             file_path = dialog.selectedFiles()
-            self.path = file_path[0]
+            saved_path = save_image(file_path[0])
+            self.path = saved_path
             self.image_button.setImage(self.path)
 
     def setAlignment(self, alignment):
