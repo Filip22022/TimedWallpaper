@@ -1,7 +1,10 @@
+import subprocess
+
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QFont
 from PyQt5.QtWidgets import QMainWindow, QWidget, QVBoxLayout, QHBoxLayout, QLabel, QMessageBox, QPushButton
 
+from src.utilities.functions import save_data
 from src.widgets.buttons import CounterButton
 from src.widgets.wallpaper_timeline import WallpaperTimeline
 
@@ -12,6 +15,7 @@ class MultiSlider:
 
 class MainWindow(QMainWindow):
 
+    # noinspection PyUnresolvedReferences
     def __init__(self):
         super(MainWindow, self).__init__()
         self.setWindowTitle("My App")
@@ -29,6 +33,11 @@ class MainWindow(QMainWindow):
         self.minus_button = CounterButton("-", self)
         self.minus_button.clicked.connect(self.changepoint_decrement)
 
+        self.confirm_button = QPushButton("Confirm")
+        self.confirm_button.clicked.connect(self.confirm_wallpapers)
+        self.disable_button = QPushButton("Disable script")
+        self.disable_button.clicked.connect(self.terminate_script)
+
         self._init_ui()
 
     def _init_ui(self):
@@ -43,10 +52,18 @@ class MainWindow(QMainWindow):
         counter_layout.setAlignment(self.plus_button, Qt.AlignLeft)
         counter_layout.addStretch(10)
 
+        button_layout = QHBoxLayout()
+        button_layout.addWidget(self.confirm_button)
+        button_layout.setAlignment(self.confirm_button, Qt.AlignRight)
+        button_layout.addWidget(self.disable_button)
+        button_layout.setAlignment(self.disable_button, Qt.AlignLeft)
+        self.disable_button.setDisabled(True)
+
         main_layout = QVBoxLayout()
         main_layout.setSpacing(10)
         main_layout.addLayout(counter_layout, stretch=1)
         main_layout.addWidget(self.wallpaper_timeline, stretch=2)
+        main_layout.addLayout(button_layout)
 
         widget = QWidget()
         widget.setLayout(main_layout)
@@ -77,3 +94,15 @@ class MainWindow(QMainWindow):
         else:
             self.msg.setText("Maximum changepoint number is 9")
             self.msg.exec()
+
+    def confirm_wallpapers(self):
+        data = self.wallpaper_timeline.get_data()
+        save_data(data)
+        subprocess.Popen(['pythonw', "background/exe_runner.pyw"])
+
+        self.disable_button.setDisabled(False)
+
+    def terminate_script(self):
+        pid = self.get_process()
+        subprocess.Popen('taskkill /F /PID {0}'.format(pid), shell=True)
+        self.disable_button.setDisabled(True)
