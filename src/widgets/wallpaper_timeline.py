@@ -1,11 +1,8 @@
-from collections import namedtuple
-
 from PyQt5 import QtCore
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QWidget, QSlider, QHBoxLayout, QVBoxLayout, QScrollArea
 from superqt import QRangeSlider
 
-from src.utilities.WallpaperData import WallpaperData
 from src.widgets.buttons import WallpaperButton
 
 
@@ -50,7 +47,11 @@ class WallpaperTimeline(QWidget):
     def get_data(self):
         values = self.timeline.get_hours()
         paths = self.display.get_images()
-        return [WallpaperData(value, path) for value, path in zip(values, paths)]
+        data = list()
+        for value, path in zip(values, paths):
+            if value is None or path is None:
+                raise Exception("Unspecified Image")
+        return data
 
 
 class Timeline(QWidget):
