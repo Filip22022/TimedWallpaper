@@ -2,7 +2,7 @@ from PyQt5.QtCore import QSize
 from PyQt5.QtGui import QFont
 from PyQt5.QtWidgets import QPushButton, QSizePolicy, QFileDialog, QLabel, QVBoxLayout, QWidget
 
-from src.utilities.functions import save_image
+from src.storage.functions import save_image
 
 
 class WallpaperButton(QWidget):
