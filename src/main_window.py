@@ -11,10 +11,6 @@ from src.widgets.buttons import CounterButton
 from src.widgets.wallpaper_timeline import WallpaperTimeline
 
 
-class MultiSlider:
-    pass
-
-
 class MainWindow(QMainWindow):
 
     # noinspection PyUnresolvedReferences
