@@ -4,7 +4,9 @@ from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QFont
 from PyQt5.QtWidgets import QMainWindow, QWidget, QVBoxLayout, QHBoxLayout, QLabel, QMessageBox, QPushButton
 
-from src.utilities.functions import save_data
+from src.storage.data import WallpaperData
+from src.storage.functions import app_root_path
+from src.storage.process import Process
 from src.widgets.buttons import CounterButton
 from src.widgets.wallpaper_timeline import WallpaperTimeline
 
@@ -55,9 +57,10 @@ class MainWindow(QMainWindow):
         button_layout = QHBoxLayout()
         button_layout.addWidget(self.confirm_button)
         button_layout.setAlignment(self.confirm_button, Qt.AlignRight)
+        self.confirm_button.setDisabled(Process.file_exists())
         button_layout.addWidget(self.disable_button)
         button_layout.setAlignment(self.disable_button, Qt.AlignLeft)
-        self.disable_button.setDisabled(True)
+        self.disable_button.setEnabled(Process.file_exists())
 
         main_layout = QVBoxLayout()
         main_layout.setSpacing(10)
@@ -96,13 +99,44 @@ class MainWindow(QMainWindow):
             self.msg.exec()
 
     def confirm_wallpapers(self):
-        data = self.wallpaper_timeline.get_data()
-        save_data(data)
-        subprocess.Popen(['pythonw', "background/exe_runner.pyw"])
+        try:
+            data = self.wallpaper_timeline.get_data()
+        except Exception as e:
+            show_message(str(e))
+            return
+        WallpaperData.save(data)
 
-        self.disable_button.setDisabled(False)
+        exe_path = app_root_path("./executable/timed_wallpaper.exe")
+
+        process = subprocess.Popen([exe_path])
+
+        pid = process.pid
+        print("Proces started with pid: " + str(pid))
+        Process.save(pid)
+
+        self.disable_button.setEnabled(Process.file_exists())
+        self.confirm_button.setDisabled(Process.file_exists())
 
     def terminate_script(self):
-        pid = self.get_process()
-        subprocess.Popen('taskkill /F /PID {0}'.format(pid), shell=True)
-        self.disable_button.setDisabled(True)
+        if Process.file_exists():
+            if Process.is_active():
+                Process.terminate()
+                Process.remove_file()
+            else:
+                Process.remove_file()
+        else:
+            raise Exception("No saved process")
+
+        self.disable_button.setEnabled(Process.file_exists())
+        self.confirm_button.setDisabled(Process.file_exists())
+
+
+def show_message(message):
+    msg = QMessageBox()
+    msg.setIcon(QMessageBox.Information)
+    msg.setText(message)
+    msg.setWindowTitle("Message")
+    msg.setStandardButtons(QMessageBox.Ok)
+
+    # Execute the message box
+    msg.exec_()
