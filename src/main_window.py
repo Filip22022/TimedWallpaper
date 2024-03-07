@@ -102,7 +102,7 @@ class MainWindow(QMainWindow):
             return
         WallpaperData.save(data)
 
-        exe_path = app_root_path("./executable/timed_wallpaper.exe")
+        exe_path = app_root_path("./executable/wallpaper_switcher.exe")
 
         process = subprocess.Popen([exe_path])
 
