@@ -23,8 +23,8 @@ class MainWindow(QMainWindow):
         self.wallpaper_timeline = WallpaperTimeline()
         self.msg = QMessageBox()
 
-        self.label = QLabel("2")
-        self._setup_label()
+        self.text_label = QLabel("Number of daily changes:")
+        self.counter_label = QLabel("2")
 
         self.plus_button = CounterButton("+", self)
         self.plus_button.clicked.connect(self.changepoint_increment)
@@ -40,15 +40,23 @@ class MainWindow(QMainWindow):
 
     def _init_ui(self):
 
+        self.counter_label.setStyleSheet('border: 2px solid black; padding: 5px;')
+        self.counter_label.setAlignment(Qt.AlignCenter)
+        self.counter_label.setContentsMargins(30, 20, 30, 20)
+        font = QFont()
+        font.setPointSize(20)
+        self.counter_label.setFont(font)
+        font.setPointSize(12)
+        self.text_label.setFont(font)
+
         # Create counter layout
         counter_layout = QHBoxLayout()
-        counter_layout.addWidget(self.label, stretch=0)
-        counter_layout.setAlignment(self.label, Qt.AlignCenter)
+        counter_layout.addStretch(2)
+        counter_layout.addWidget(self.text_label)
+        counter_layout.addWidget(self.counter_label)
         counter_layout.addWidget(self.plus_button)
         counter_layout.addWidget(self.minus_button)
-        counter_layout.setAlignment(self.minus_button, Qt.AlignLeft)
-        counter_layout.setAlignment(self.plus_button, Qt.AlignLeft)
-        counter_layout.addStretch(10)
+        counter_layout.addStretch(2)
 
         button_layout = QHBoxLayout()
         button_layout.addWidget(self.confirm_button)
@@ -68,14 +76,8 @@ class MainWindow(QMainWindow):
         widget.setLayout(main_layout)
         self.setCentralWidget(widget)
 
-    def _setup_label(self):
-        self.label.setContentsMargins(30, 5, 10, 5)
-        font = QFont()
-        font.setPointSize(20)
-        self.label.setFont(font)
-
     def changepoint_count_change(self):
-        self.label.setNum(self.changepoint_count)
+        self.counter_label.setNum(self.changepoint_count)
         self.wallpaper_timeline.update_changepoints(self.changepoint_count)
 
     def changepoint_decrement(self):
