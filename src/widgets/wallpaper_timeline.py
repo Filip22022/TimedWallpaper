@@ -51,6 +51,7 @@ class WallpaperTimeline(QWidget):
         for value, path in zip(values, paths):
             if value is None or path is None:
                 raise Exception("Unspecified Image")
+            data.append((value, path))
         return data
 
 
