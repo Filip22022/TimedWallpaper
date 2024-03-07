@@ -8,12 +8,6 @@ import schedule
 
 win_wallpaper_path = "set_wallpaper.exe"
 
-
-def log(message):
-    with open('log.txt', 'w') as file:
-        file.write(message)
-
-
 def app_root_path(relative_path):
     app_path = ""
     if getattr(sys, 'frozen', False):
