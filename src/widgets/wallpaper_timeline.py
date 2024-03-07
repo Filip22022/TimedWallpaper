@@ -128,9 +128,11 @@ class Timeline(QWidget):
         self.valuesChanged.emit(values)
 
     def get_hours(self):
-        hours = [str(int(val // 60)) for val in self.values]
-        minutes = [str(int(val % 60)) for val in self.values]
-        return [str(h + ":" + m) for h, m in zip(hours, minutes)]
+        return [self.convert_time_format(value) for value in self.values]
+
+    def convert_time_format(self, time_in_minutes):
+        hours, minutes = divmod(time_in_minutes, 60)
+        return f'{hours:02}:{minutes:02}'
 
 
 class WallpaperDisplay(QWidget):
@@ -172,10 +174,9 @@ class WallpaperDisplay(QWidget):
                 self._changepoints[i].hide()
 
     def set_times(self, values):
-        last_value = values[-1]
-        for changepoint, value in zip(self._changepoints, values):
-            changepoint.setTimes(last_value, value)
-            last_value = value
+        next_values = values[1:] + [values[0]]
+        for changepoint, value, next_value in zip(self._changepoints, values, next_values):
+            changepoint.setTimes(value, next_value)
 
     def get_images(self):
         image_paths = []

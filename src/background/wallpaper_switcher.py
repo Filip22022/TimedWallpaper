@@ -37,7 +37,7 @@ with open(data_path, 'rb') as file:
 
 print("Setting up changepoints:")
 for change_time, path in wallpaper_data:
-    print(change_time + path)
+    print(change_time + "    " + path)
     schedule.every().day.at(change_time).do(set_wallpaper, file_path=path)
 
 while True:
