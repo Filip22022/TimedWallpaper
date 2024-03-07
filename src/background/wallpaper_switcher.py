@@ -35,8 +35,9 @@ data_path = app_root_path("./data/wallpaper_data.pk")
 with open(data_path, 'rb') as file:
     wallpaper_data = pickle.load(file)
 
-
+print("Setting up changepoints:")
 for change_time, path in wallpaper_data:
+    print(change_time + path)
     schedule.every().day.at(change_time).do(set_wallpaper, file_path=path)
 
 while True:

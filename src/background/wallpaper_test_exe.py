@@ -35,13 +35,6 @@ def set_wallpaper(file_path):
     if not os.path.exists(file_path):
         raise FileNotFoundError(f'wallpaper file was not found in {file_path}')
     ctypes.windll.user32.SystemParametersInfoW(20, 0, file_path, 3)
-    log("Wallpaper set to: " + file_path)
-
-
-# Clear log file
-open('log.txt', 'w').close()
-
-log("Script Started")
 
 # Load user settings
 data_path = app_root_path("./data/wallpaper_data.pk")
@@ -57,8 +50,10 @@ file_path2 = app_root_path("./data/images/temple.jpg")
 # schedule.every().day.at(time1).do(set_wallpaper, file_path=file_path1)
 # schedule.every().day.at(time2).do(set_wallpaper, file_path=file_path2)
 set_wallpaper(file_path1)
+print("Changed 1")
 time.sleep(15)
 set_wallpaper(file_path2)
+print("Changed 2")
 
 while True:
     schedule.run_pending()
