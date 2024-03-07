@@ -96,7 +96,6 @@ class Timeline(QWidget):
         self._slider.setValue(self.values)
         self._slider.setTickPosition(QSlider.TicksBelow)
         self._slider.setTickInterval(60)
-        self._slider.setSingleStep(self._interval)
         self._slider.setBarMovesAllHandles(False)
         self._slider.valueChanged.connect(self._update_values)
 
@@ -121,11 +120,12 @@ class Timeline(QWidget):
         self._slider.setValue(new_values)
 
     def _update_values(self):
-        self.values = list(self._slider.value())
+        self.values = [5 * round(number / 5) for number in self._slider.value()]
         self._emit_values(self.get_hours())
 
     def _emit_values(self, values):
         self.valuesChanged.emit(values)
+
 
     def get_hours(self):
         return [self.convert_time_format(value) for value in self.values]
