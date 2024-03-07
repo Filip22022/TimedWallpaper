@@ -74,5 +74,5 @@ class ImageButton(QPushButton):
         self.image = image_path
 
         # setting image to the button
-        self.setStyleSheet(f"border-image : url({self.image}); background-size: cover;")
+        self.setStyleSheet(f"border-image : url({self.image});")
         self.update()

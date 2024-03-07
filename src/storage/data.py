@@ -8,7 +8,7 @@ class WallpaperData:
 
     @staticmethod
     def save(data):
-        print("Saving data: " + data)
+        print("Saving data: " + str(data))
         with open(WallpaperData.path, 'wb') as file:
             pickle.dump(data, file)
 
