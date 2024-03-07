@@ -43,10 +43,5 @@ class Process:
 
     @staticmethod
     def terminate():
-        pid = Process.load()
-        # os.kill(pid, signal.SIGTERM)
-
-        subprocess.run(["taskkill", "/IM", "timed_wallpaper.exe", "/F"], shell=True)
-
-        print("Process " + str(pid) + " terminated")
+        subprocess.run(["taskkill", "/IM", "wallpaper_switcher.exe", "/F"], shell=True)
 
