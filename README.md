@@ -44,11 +44,11 @@ __Using the executable files__
 - Put the executables in one folder and start the program using _main.exe_ file
 
 __Using the source code__
-#TODO
-
-What are the project requirements/dependencies? Where are they listed? A requirements.txt or a Pipfile.lock file perhaps? Where is it located?
-
-Proceed to describe how to install / setup one's local environment / get started with the project.
+1. Install [Python](https://www.python.org/downloads/)
+2. Download the source code
+3. Install the required modules by running the following command in the project folder
+`pip install -r requirements.txt`
+4. Run the main.py file to start the program
 
 
 ## Usage
