@@ -33,7 +33,7 @@ class MainWindow(QMainWindow):
 
         self.confirm_button = QPushButton("Confirm")
         self.confirm_button.clicked.connect(self.confirm_wallpapers)
-        self.disable_button = QPushButton("Disable script")
+        self.disable_button = QPushButton("Disable")
         self.disable_button.clicked.connect(self.terminate_script)
 
         self._init_ui()
