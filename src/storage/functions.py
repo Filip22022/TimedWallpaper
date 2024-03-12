@@ -12,9 +12,13 @@ def save_image(image_path: str):
 
         new_image_path = os.path.join(new_directory, image_file_name)
 
-        shutil.copy(image_path, new_image_path)
+        if os.path.exists(new_image_path):
+            print(f"Image file '{image_file_name}' already saved, copying skipped")
+        else:
+            shutil.copy(image_path, new_image_path)
+            print(f"Image copied from '{image_path}' to '{new_image_path}' successfully.")
+
         new_image_path = new_image_path.replace("\\", "/")
-        print(f"Image copied from '{image_path}' to '{new_image_path}' successfully.")
 
         return new_image_path
 
