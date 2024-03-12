@@ -41,7 +41,7 @@ Main interface of the application
 __Using the executable files__
 - To use the program via the executables download _both_ executables from the releases tab (on the right)
 
-- Put the executables in one folder and start the program using _main.exe_ file
+- Put the executables in one folder and start the program using _TimedWallpaper.exe_ file
 
 __Using the source code__
 1. Install [Python](https://www.python.org/downloads/)
