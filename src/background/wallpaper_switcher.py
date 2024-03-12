@@ -11,7 +11,7 @@ def app_root_path(relative_path):
     app_path = ""
     if getattr(sys, 'frozen', False):
         script_path = os.path.dirname(sys.executable)
-        app_path = os.path.join(script_path, "../")
+        app_path = os.path.join(script_path, "./")
     elif __file__:
         script_path = os.path.dirname(os.path.abspath(__file__))
         app_path = os.path.join(script_path, "../../")
