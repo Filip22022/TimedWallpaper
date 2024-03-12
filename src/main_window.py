@@ -33,7 +33,7 @@ class MainWindow(QMainWindow):
 
         self.confirm_button = QPushButton("Confirm")
         self.confirm_button.clicked.connect(self.confirm_wallpapers)
-        self.disable_button = QPushButton("Disable script")
+        self.disable_button = QPushButton("Disable")
         self.disable_button.clicked.connect(self.terminate_script)
 
         self._init_ui()
@@ -61,10 +61,10 @@ class MainWindow(QMainWindow):
         button_layout = QHBoxLayout()
         button_layout.addWidget(self.confirm_button)
         button_layout.setAlignment(self.confirm_button, Qt.AlignRight)
-        self.confirm_button.setDisabled(Process.file_exists())
+        self.confirm_button.setDisabled(Process.is_active())
         button_layout.addWidget(self.disable_button)
         button_layout.setAlignment(self.disable_button, Qt.AlignLeft)
-        self.disable_button.setEnabled(Process.file_exists())
+        self.disable_button.setEnabled(Process.is_active())
 
         main_layout = QVBoxLayout()
         main_layout.setSpacing(10)
@@ -110,23 +110,18 @@ class MainWindow(QMainWindow):
 
         pid = process.pid
         print("Proces started with pid: " + str(pid))
-        Process.save(pid)
 
-        self.disable_button.setEnabled(Process.file_exists())
-        self.confirm_button.setDisabled(Process.file_exists())
+        self.disable_button.setEnabled(Process.is_active())
+        self.confirm_button.setDisabled(Process.is_active())
 
     def terminate_script(self):
-        if Process.file_exists():
-            if Process.is_active():
-                Process.terminate()
-                Process.remove_file()
-            else:
-                Process.remove_file()
+        if Process.is_active():
+            Process.terminate()
         else:
-            raise Exception("No saved process")
+            raise Exception("No process running")
 
-        self.disable_button.setEnabled(Process.file_exists())
-        self.confirm_button.setDisabled(Process.file_exists())
+        self.disable_button.setEnabled(Process.is_active())
+        self.confirm_button.setDisabled(Process.is_active())
 
 
 def show_message(message):
