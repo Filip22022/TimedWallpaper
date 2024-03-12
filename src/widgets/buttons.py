@@ -1,3 +1,5 @@
+import os
+
 from PyQt5.QtCore import QSize
 from PyQt5.QtGui import QFont
 from PyQt5.QtWidgets import QPushButton, QSizePolicy, QFileDialog, QLabel, QVBoxLayout, QWidget
@@ -40,7 +42,10 @@ class WallpaperButton(QWidget):
         dialog = QFileDialog()
         dialog.setFileMode(QFileDialog.FileMode.ExistingFile)
         dialog.setNameFilter("Images (*.png *.jpg)")
-        dialog.setDirectory(app_root_path("./data/images"))
+
+        img_directory = app_root_path(".\data\images")
+        os.makedirs(img_directory, exist_ok=True)
+        dialog.setDirectory(img_directory)
         if dialog.exec():
             file_path = dialog.selectedFiles()
             saved_path = save_image(file_path[0])
