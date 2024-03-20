@@ -49,7 +49,7 @@ __Using the source code__
 2. Download the source code
 3. Install the required modules by running the following command in the project folder
 `pip install -r requirements.txt`
-4. Run the main.py file to start the program
+4. Run the TimedWallpaper.py file to start the program
 
 
 ## Usage
