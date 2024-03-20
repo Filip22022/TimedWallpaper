@@ -1,4 +1,4 @@
-# TimedWa;;[a[er
+# TimedWallpaper
 > A windows application changing the wallpaper on a defined schedule daily
 
 ## Table of Contents
