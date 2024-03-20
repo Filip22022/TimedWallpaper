@@ -40,6 +40,7 @@ Main interface of the application
 ## Setup
 __Using the executable files__
 - To use the program via the executables download  the newest version of _both_ executables from the Releases tab (top of the page, on the right, under the About seciton)
+![Example screenshot](./screenshots/Releases_location.png)
 
 - Put the executables in one folder and start the program using _TimedWallpaper.exe_ file
 
