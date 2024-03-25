@@ -34,22 +34,29 @@ Completed so far
 
 ## Screenshots
 Main interface of the application
-![Example screenshot](./screenshots/screenshot1.png)
+![App Screenshot](./screenshots/screenshot1.png)
 
 
 ## Setup
 __Using the executable files__
-- To use the program via the executables download  the newest version of _both_ executables from the Releases tab (top of the page, on the right, under the About seciton)
-![Example screenshot](./screenshots/Releases_location.png)
 
-- Put the executables in one folder and start the program using _TimedWallpaper.exe_ file
+> The browser marks the executables as dangerous, if you want to compile them yourself, refer to to the next section
+
+- To use the program via the executables download  the newest version of _both_ executables from the Releases tab (top of the page, on the right, under the About seciton)
+![Releases location](./screenshots/Releases_location.png)
+
+- Put the executables in one folder and start the program using `TimedWallpaper.exe` file
+
 
 __Using the source code__
 1. Install [Python](https://www.python.org/downloads/)
 2. Download the source code
-3. Install the required modules by running the following command in the project folder
+![Code location](./screenshots/Code_location.png)
+3. Install the required modules by running the following command in the `TimedWallpaper` folder
 `pip install -r requirements.txt`
-4. Run the TimedWallpaper.py file to start the program
+4. compile the background script into executable using the following command: `pyinstaller -y -F --noconsole  --distpath ./  "src/background/wallpaper_switcher.py" `
+5. Run the `TimedWallpaper.py` file to start the program
+
 
 
 ## Usage
