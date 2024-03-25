@@ -47,6 +47,7 @@ __Using the executable files__
 
 - Put the executables in one folder and start the program using `TimedWallpaper.exe` file
 
+
 __Using the source code__
 1. Install [Python](https://www.python.org/downloads/)
 2. Download the source code
@@ -55,6 +56,7 @@ __Using the source code__
 `pip install -r requirements.txt`
 4. compile the background script into executable using the following command: `pyinstaller -y -F --noconsole  --distpath ./  "src/background/wallpaper_switcher.py" `
 5. Run the `TimedWallpaper.py` file to start the program
+
 
 
 ## Usage
