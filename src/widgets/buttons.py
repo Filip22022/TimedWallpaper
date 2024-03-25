@@ -58,6 +58,10 @@ class WallpaperButton(QWidget):
     def setTimes(self, time_start, time_end):
         self.label.setText(time_start + ' - ' + time_end)
 
+    def set_image(self, image_path):
+        self.path = image_path
+        self.image_button.setImage(self.path)
+
 
 class CounterButton(QPushButton):
     def __init__(self, text, parent=None):

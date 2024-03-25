@@ -46,3 +46,15 @@ def resolve_path(path):
     new_path = os.path.abspath(path)
     new_path = new_path.replace("\\", "/")
     return new_path
+
+
+def convert_time_to_string(time_in_minutes):
+    hours, minutes = divmod(time_in_minutes, 60)
+    return f'{hours:02}:{minutes:02}'
+
+
+def convert_time_to_minutes(time_string):
+    hours, minutes = time_string.split(":")
+    hours = int(hours)
+    minutes = int(minutes)
+    return hours * 60 + minutes

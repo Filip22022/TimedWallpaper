@@ -1,3 +1,4 @@
+import os
 import pickle
 
 from src.storage.functions import app_root_path
@@ -23,3 +24,9 @@ class WallpaperData:
         with open(WallpaperData.path, 'rb') as file:
             wallpaper_data = pickle.load(file)
         return wallpaper_data
+
+    @staticmethod
+    def has_saved_data():
+        if os.path.exists(WallpaperData.path):
+            return True
+        return False

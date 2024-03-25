@@ -3,6 +3,7 @@ from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QWidget, QSlider, QHBoxLayout, QVBoxLayout, QScrollArea
 from superqt import QRangeSlider
 
+from src.storage.functions import convert_time_to_minutes, convert_time_to_string
 from src.widgets.buttons import WallpaperButton
 
 
@@ -49,6 +50,13 @@ class WallpaperTimeline(QWidget):
         paths = self.display.get_images()
 
         return values, paths
+
+    def load(self, data):
+        time_values, image_paths = list(zip(*data))
+        self.timeline.set_values(time_values)
+        # self.display.set_times(time_values)
+        self.display.set_images(image_paths)
+
 
 
 class Timeline(QWidget):
@@ -115,6 +123,11 @@ class Timeline(QWidget):
         new_values = self.values[:self.changepoint_count - 1] + self.values[-1:]
         self._slider.setValue(new_values)
 
+    def set_values(self, string_times):
+        values = [convert_time_to_minutes(time) for time in string_times]
+        self.update_count(len(values))
+        self._slider.setValue(values)
+
     def _update_values(self):
         self.values = [5 * round(number / 5) for number in self._slider.value()]
         self._emit_values(self.get_hours())
@@ -124,11 +137,7 @@ class Timeline(QWidget):
 
 
     def get_hours(self):
-        return [self.convert_time_format(value) for value in self.values]
-
-    def convert_time_format(self, time_in_minutes):
-        hours, minutes = divmod(time_in_minutes, 60)
-        return f'{hours:02}:{minutes:02}'
+        return [convert_time_to_string(value) for value in self.values]
 
 
 class WallpaperDisplay(QWidget):
@@ -170,6 +179,7 @@ class WallpaperDisplay(QWidget):
                 self._changepoints[i].hide()
 
     def set_times(self, values):
+        self.update_count(len(values))
         next_values = values[1:] + [values[0]]
         for changepoint, value, next_value in zip(self._changepoints, values, next_values):
             changepoint.setTimes(value, next_value)
@@ -179,3 +189,7 @@ class WallpaperDisplay(QWidget):
         for c in self._changepoints:
             image_paths.append(c.path)
         return image_paths
+
+    def set_images(self, image_paths):
+        for path, changepoint in zip(image_paths, self._changepoints):
+            changepoint.set_image(path)

@@ -21,6 +21,7 @@ class MainWindow(QMainWindow):
 
         self.changepoint_count = 2
         self.wallpaper_timeline = WallpaperTimeline()
+        self._init_timeline()
         self.msg = QMessageBox()
 
         self.text_label = QLabel("Number of daily changes:")
@@ -75,6 +76,10 @@ class MainWindow(QMainWindow):
         widget = QWidget()
         widget.setLayout(main_layout)
         self.setCentralWidget(widget)
+
+    def _init_timeline(self):
+        if WallpaperData.has_saved_data():
+            self.wallpaper_timeline.load(WallpaperData.load())
 
     def changepoint_count_change(self):
         self.counter_label.setNum(self.changepoint_count)
