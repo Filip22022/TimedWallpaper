@@ -7,7 +7,13 @@ class WallpaperData:
     path = app_root_path("./data/wallpaper_data.pk")
 
     @staticmethod
-    def save(data):
+    def save(times, image_paths):
+        data = list()
+        for value, path in zip(times, image_paths):
+            if value is None or path is None:
+                raise Exception("Unspecified Image")
+            data.append((value, path))
+
         print("Saving data: " + str(data))
         with open(WallpaperData.path, 'wb') as file:
             pickle.dump(data, file)

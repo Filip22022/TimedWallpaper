@@ -47,12 +47,8 @@ class WallpaperTimeline(QWidget):
     def get_data(self):
         values = self.timeline.get_hours()
         paths = self.display.get_images()
-        data = list()
-        for value, path in zip(values, paths):
-            if value is None or path is None:
-                raise Exception("Unspecified Image")
-            data.append((value, path))
-        return data
+
+        return values, paths
 
 
 class Timeline(QWidget):

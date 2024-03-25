@@ -98,11 +98,11 @@ class MainWindow(QMainWindow):
 
     def confirm_wallpapers(self):
         try:
-            data = self.wallpaper_timeline.get_data()
+            times, images = self.wallpaper_timeline.get_data()
         except Exception as e:
             show_message(str(e))
             return
-        WallpaperData.save(data)
+        WallpaperData.save(times, images)
 
         exe_path = app_root_path("./wallpaper_switcher.exe")
 
