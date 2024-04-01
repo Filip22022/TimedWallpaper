@@ -21,10 +21,11 @@ class MainWindow(QMainWindow):
 
         self.text_label = QLabel("Number of daily changes:")
         self.counter_label = QLabel("2")
+        self.message_label = QLabel("")
 
         self.changepoint_count = 2
         self.wallpaper_timeline = WallpaperTimeline()
-        self._init_timeline()
+        self.load_data()
         self.msg = QMessageBox()
 
 
@@ -37,6 +38,7 @@ class MainWindow(QMainWindow):
         self.confirm_button.clicked.connect(self.confirm_wallpapers)
         self.disable_button = QPushButton("Disable")
         self.disable_button.clicked.connect(self.terminate_script)
+
 
         self._init_ui()
 
@@ -74,16 +76,23 @@ class MainWindow(QMainWindow):
         main_layout.addWidget(self.wallpaper_timeline, stretch=2)
         main_layout.addLayout(button_layout)
 
+        main_layout.addWidget(self.message_label)
+        main_layout.setAlignment(self.message_label, Qt.AlignHCenter)
+
         widget = QWidget()
         widget.setLayout(main_layout)
         self.setCentralWidget(widget)
 
-    def _init_timeline(self):
+    def load_data(self):
         if WallpaperData.has_saved_data():
             loaded_data = WallpaperData.load()
             self.wallpaper_timeline.load(loaded_data)
             self.changepoint_count = len(loaded_data)
             self.counter_label.setNum(self.changepoint_count)
+        if Process.is_active():
+            self.message_label.setText("Background script running")
+        else:
+            self.message_label.setText("No script active")
 
     def changepoint_count_change(self):
         self.counter_label.setNum(self.changepoint_count)
@@ -119,6 +128,7 @@ class MainWindow(QMainWindow):
 
         pid = process.pid
         print("Proces started with pid: " + str(pid))
+        self.message_label.setText("Background script running")
 
         self.disable_button.setEnabled(Process.is_active())
         self.confirm_button.setDisabled(Process.is_active())
@@ -131,6 +141,7 @@ class MainWindow(QMainWindow):
 
         self.disable_button.setEnabled(Process.is_active())
         self.confirm_button.setDisabled(Process.is_active())
+        self.message_label.setText("No script active")
 
 
 def show_message(message):
