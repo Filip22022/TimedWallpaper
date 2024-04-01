@@ -19,13 +19,14 @@ class MainWindow(QMainWindow):
         self.setWindowTitle("My App")
         self.resize(900, 600)
 
-        self.changepoint_count = 2
-        self.wallpaper_timeline = WallpaperTimeline()
-        self._init_timeline()
-        self.msg = QMessageBox()
-
         self.text_label = QLabel("Number of daily changes:")
         self.counter_label = QLabel("2")
+        self.message_label = QLabel("")
+
+        self.changepoint_count = 2
+        self.wallpaper_timeline = WallpaperTimeline()
+        self.load_data()
+        self.msg = QMessageBox()
 
         self.plus_button = CounterButton("+", self)
         self.plus_button.clicked.connect(self.changepoint_increment)
@@ -73,13 +74,23 @@ class MainWindow(QMainWindow):
         main_layout.addWidget(self.wallpaper_timeline, stretch=2)
         main_layout.addLayout(button_layout)
 
+        main_layout.addWidget(self.message_label)
+        main_layout.setAlignment(self.message_label, Qt.AlignHCenter)
+
         widget = QWidget()
         widget.setLayout(main_layout)
         self.setCentralWidget(widget)
 
-    def _init_timeline(self):
+    def load_data(self):
         if WallpaperData.has_saved_data():
-            self.wallpaper_timeline.load(WallpaperData.load())
+            loaded_data = WallpaperData.load()
+            self.wallpaper_timeline.load(loaded_data)
+            self.changepoint_count = len(loaded_data)
+            self.counter_label.setNum(self.changepoint_count)
+        if Process.is_active():
+            self.message_label.setText("Background script running")
+        else:
+            self.message_label.setText("No script active")
 
     def changepoint_count_change(self):
         self.counter_label.setNum(self.changepoint_count)
@@ -104,10 +115,23 @@ class MainWindow(QMainWindow):
     def confirm_wallpapers(self):
         try:
             times, images = self.wallpaper_timeline.get_data()
+            WallpaperData.save(times, images)
         except Exception as e:
             show_message(str(e))
             return
-        WallpaperData.save(times, images)
+
+        self.start_switcher()
+
+        if Process.is_active():
+            self.message_label.setText("Background script running")
+
+            self.disable_button.setEnabled(Process.is_active())
+            self.confirm_button.setDisabled(Process.is_active())
+        else:
+            show_message("Failed to start script")
+
+    def start_switcher(self):
+        self.message_label.setText("Script starting")
 
         exe_path = app_root_path("./wallpaper_switcher.exe")
 
@@ -116,17 +140,15 @@ class MainWindow(QMainWindow):
         pid = process.pid
         print("Proces started with pid: " + str(pid))
 
-        self.disable_button.setEnabled(Process.is_active())
-        self.confirm_button.setDisabled(Process.is_active())
-
     def terminate_script(self):
         if Process.is_active():
             Process.terminate()
         else:
-            raise Exception("No process running")
+            show_message("No process running")
 
         self.disable_button.setEnabled(Process.is_active())
         self.confirm_button.setDisabled(Process.is_active())
+        self.message_label.setText("No script active")
 
 
 def show_message(message):
