@@ -28,7 +28,6 @@ class MainWindow(QMainWindow):
         self.load_data()
         self.msg = QMessageBox()
 
-
         self.plus_button = CounterButton("+", self)
         self.plus_button.clicked.connect(self.changepoint_increment)
         self.minus_button = CounterButton("-", self)
@@ -38,7 +37,6 @@ class MainWindow(QMainWindow):
         self.confirm_button.clicked.connect(self.confirm_wallpapers)
         self.disable_button = QPushButton("Disable")
         self.disable_button.clicked.connect(self.terminate_script)
-
 
         self._init_ui()
 
@@ -122,22 +120,31 @@ class MainWindow(QMainWindow):
             show_message(str(e))
             return
 
+        self.start_switcher()
+
+        if Process.is_active():
+            self.message_label.setText("Background script running")
+
+            self.disable_button.setEnabled(Process.is_active())
+            self.confirm_button.setDisabled(Process.is_active())
+        else:
+            show_message("Failed to start script")
+
+    def start_switcher(self):
+        self.message_label.setText("Script starting")
+
         exe_path = app_root_path("./wallpaper_switcher.exe")
 
         process = subprocess.Popen([exe_path])
 
         pid = process.pid
         print("Proces started with pid: " + str(pid))
-        self.message_label.setText("Background script running")
-
-        self.disable_button.setEnabled(Process.is_active())
-        self.confirm_button.setDisabled(Process.is_active())
 
     def terminate_script(self):
         if Process.is_active():
             Process.terminate()
         else:
-            raise Exception("No process running")
+            show_message("No process running")
 
         self.disable_button.setEnabled(Process.is_active())
         self.confirm_button.setDisabled(Process.is_active())
