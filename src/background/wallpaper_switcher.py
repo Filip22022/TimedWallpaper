@@ -1,8 +1,9 @@
 import ctypes
+from datetime import datetime
+from time import sleep
 import os
 import pickle
 import sys
-import time
 
 import schedule
 
@@ -35,6 +36,16 @@ data_path = app_root_path("./data/wallpaper_data.pk")
 with open(data_path, 'rb') as file:
     wallpaper_data = pickle.load(file)
 
+# Ensure wallpaper is switched to current
+now = datetime.now().time()
+for i in range(len(wallpaper_data)-1):
+    time, path = wallpaper_data[i]
+    time = datetime.strptime(time, '%H:%M').time()
+    next_time, _ = wallpaper_data[i+1]
+    next_time = datetime.strptime(next_time, '%H:%M').time()
+    if time < now < next_time:
+        set_wallpaper(path)
+
 print("Setting up changepoints:")
 for change_time, path in wallpaper_data:
     print(change_time + "    " + path)
@@ -42,4 +53,4 @@ for change_time, path in wallpaper_data:
 
 while True:
     schedule.run_pending()
-    time.sleep(1)
+    sleep(1)
