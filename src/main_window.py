@@ -19,13 +19,14 @@ class MainWindow(QMainWindow):
         self.setWindowTitle("My App")
         self.resize(900, 600)
 
+        self.text_label = QLabel("Number of daily changes:")
+        self.counter_label = QLabel("2")
+
         self.changepoint_count = 2
         self.wallpaper_timeline = WallpaperTimeline()
         self._init_timeline()
         self.msg = QMessageBox()
 
-        self.text_label = QLabel("Number of daily changes:")
-        self.counter_label = QLabel("2")
 
         self.plus_button = CounterButton("+", self)
         self.plus_button.clicked.connect(self.changepoint_increment)
@@ -79,7 +80,10 @@ class MainWindow(QMainWindow):
 
     def _init_timeline(self):
         if WallpaperData.has_saved_data():
-            self.wallpaper_timeline.load(WallpaperData.load())
+            loaded_data = WallpaperData.load()
+            self.wallpaper_timeline.load(loaded_data)
+            self.changepoint_count = len(loaded_data)
+            self.counter_label.setNum(self.changepoint_count)
 
     def changepoint_count_change(self):
         self.counter_label.setNum(self.changepoint_count)
@@ -104,10 +108,10 @@ class MainWindow(QMainWindow):
     def confirm_wallpapers(self):
         try:
             times, images = self.wallpaper_timeline.get_data()
+            WallpaperData.save(times, images)
         except Exception as e:
             show_message(str(e))
             return
-        WallpaperData.save(times, images)
 
         exe_path = app_root_path("./wallpaper_switcher.exe")
 
