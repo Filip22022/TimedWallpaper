@@ -41,8 +41,6 @@ class MainWindow(QMainWindow):
         self._init_ui()
 
     def _init_ui(self):
-
-        self.counter_label.setStyleSheet('border: 2px solid black; padding: 5px;')
         self.counter_label.setAlignment(Qt.AlignCenter)
         self.counter_label.setContentsMargins(30, 20, 30, 20)
         font = QFont()
