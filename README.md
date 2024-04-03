@@ -17,19 +17,20 @@
 - The application automates daily changing of desktop wallpaper
 - Intended only for use on Windows
   - Currently tested only on Windows 11
-- I created the project because I wanted my wallpaper to change with the sunlight
+- I created the project because I wanted my wallpaper to change together with the sunlight
 
 
 ## Technologies Used
 - Python - 3.11.1
 - PyQt5 - 5.15.10
-- PyInstaller - 6.4.10
+- PyInstaller - 6.5.0
 
 
 ## Features
 Completed so far
 - Graphical interface for selecting the images and times of wallpaper change
 - Separate part of the program scheduling the changes and switching the wallpaper
+- Up to 9 configurable wallpaper changes per day
 
 
 ## Screenshots
