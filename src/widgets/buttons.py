@@ -17,6 +17,7 @@ class WallpaperButton(QWidget):
         self.layout = QVBoxLayout()
         self.path = None
         self.label = QLabel()
+        self.label.setObjectName("WallpaperButtonLabel")
         self.image_button = ImageButton()
         self.min_size = QSize(400, 300)
         self.max_size = QSize(800, 600)

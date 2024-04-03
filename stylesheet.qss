@@ -6,7 +6,14 @@ QMainWindow, QPushButton, QLabel, QScrollArea {
 
 WallpaperButton {
     min-width: 300px;
-    font-size: 12px;
+}
+
+#WallpaperButtonLabel {
+    font-size: 16px;
+}
+
+#MessageLabel {
+    font-size: 16px;
 }
 
 QPushButton {
@@ -26,22 +33,43 @@ QPushButton:pressed {
     border-style: inset;
 }
 
+QPushButton:disabled {
+    background-color: gray;
+}
+
 QSlider {
     min-height: 20px;
 }
 
 QSlider::groove {
     border: 0px;
-    color: blue;
+    color: #C7E3CF;
     height: 20px;
     border-radius: 10px;
     background-color: white;
 }
 
 QSlider::handle {
-    background: #2A633A;
+    background: #65AD79;
     height: 20px;
     width: 10px;
     border-radius: 5px;
 }
 
+QSlider::handle:pressed {
+    background: #2A633A
+}
+
+QScrollBar {
+    border-radius: 15px;
+    border-width: 3px;
+}
+
+QScrollBar::handle {
+    background: #65AD79;
+    border-radius: 5px;
+}
+
+QScrollBar::handle:pressed {
+    background: #2A633A;
+}
