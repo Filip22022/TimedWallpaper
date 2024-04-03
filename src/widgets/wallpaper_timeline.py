@@ -30,7 +30,7 @@ class WallpaperTimeline(QWidget):
 
         # Enable horizontal scrolling on timeline widget
         self.scroll = QScrollArea()
-        self.scroll.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOn)
+        self.scroll.setHorizontalScrollBarPolicy(Qt.ScrollBarAsNeeded)
         self.scroll.setWidgetResizable(True)
         self.scroll.setContentsMargins(0, 0, 0, 0)
         self.scroll.setStyleSheet("border: None;")

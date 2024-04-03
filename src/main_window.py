@@ -17,11 +17,12 @@ class MainWindow(QMainWindow):
     def __init__(self):
         super(MainWindow, self).__init__()
         self.setWindowTitle("My App")
-        self.resize(900, 600)
+        self.resize(1000, 700)
 
         self.text_label = QLabel("Number of daily changes:")
         self.counter_label = QLabel("2")
         self.message_label = QLabel("")
+        self.message_label.setObjectName("MessageLabel")
 
         self.changepoint_count = 2
         self.wallpaper_timeline = WallpaperTimeline()
@@ -41,8 +42,6 @@ class MainWindow(QMainWindow):
         self._init_ui()
 
     def _init_ui(self):
-
-        self.counter_label.setStyleSheet('border: 2px solid black; padding: 5px;')
         self.counter_label.setAlignment(Qt.AlignCenter)
         self.counter_label.setContentsMargins(30, 20, 30, 20)
         font = QFont()
